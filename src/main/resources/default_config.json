@@ -1,0 +1,6 @@
+{
+  "displayedMaxPlayers": 500,
+  "emergencyMOTD": "<#c44633>We are currently experiencing some technical difficulties. Check our Discord for more information.",
+  "apiKey": "74e925eff930a3f6e2ff4acd3b60fe03ce4cf65977ab14bee92ce1463ea67d63",
+  "mqttAddress": "tcp://54.36.178.219:1883"
+}
