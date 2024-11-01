@@ -36,6 +36,7 @@ class BandiProxy @Inject constructor(
         lateinit var instance: BandiProxy
         val PING_CHANNEL_IDENTIFIER: MinecraftChannelIdentifier = MinecraftChannelIdentifier.from("bandicorequeue:ping")
         val TRANSFER_CHANNEL_IDENTIFIER: MinecraftChannelIdentifier = MinecraftChannelIdentifier.from("bandi:transfer")
+        val BAN_CHANNEL_IDENTIFIER: MinecraftChannelIdentifier = MinecraftChannelIdentifier.from("bandicore:ban")
     }
 
     init {
@@ -60,6 +61,7 @@ class BandiProxy @Inject constructor(
         // Register messaging channels
         server.channelRegistrar.register(PING_CHANNEL_IDENTIFIER)
         server.channelRegistrar.register(TRANSFER_CHANNEL_IDENTIFIER)
+        server.channelRegistrar.register(BAN_CHANNEL_IDENTIFIER)
 
         // Register events
         server.eventManager.register(this, BackendEvents())

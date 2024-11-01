@@ -2,7 +2,10 @@ package net.bandithemepark.bandiproxy.network
 
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import com.velocitypowered.api.proxy.Player
+import net.bandithemepark.bandiproxy.BandiProxy
 import net.bandithemepark.bandiproxy.util.FileUtil
+import net.kyori.adventure.text.minimessage.MiniMessage
 import java.util.*
 
 class BanManager {
@@ -22,7 +25,7 @@ class BanManager {
      * @param uuid The UUID of the player to get the ban reason for
      * @return The reason the player was banned, or null if the player is not banned
      */
-    fun getBanReason(uuid: UUID): String? {
+    private fun getBanReason(uuid: UUID): String? {
         return activeBans.find { it.uuid == uuid }?.reason
     }
 
@@ -34,6 +37,20 @@ class BanManager {
     fun banPlayer(uuid: UUID, reason: String? = null) {
         activeBans.add(Ban(uuid, reason ?: "No reason provided"))
         saveBannedPlayers()
+
+        val player = BandiProxy.instance.server.getPlayer(uuid).orElse(null) ?: return
+        kickWithBanMessage(player)
+    }
+
+    /**
+     * Kicks a player with a ban message
+     * @param player The player to kick
+     */
+    fun kickWithBanMessage(player: Player) {
+        player.disconnect(
+            MiniMessage.miniMessage().deserialize("<#aaa9a8>You have been banned from visiting BandiThemepark.<br>The following reason was given: <br><br><#b82727>"
+                + getBanReason(player.uniqueId) + "<br><br><#aaa9a8>If you believe this ban was issued in error,<br>please contact our crew via our Discord at<br>discord.bandithemepark.net"))
+
     }
 
     /**
