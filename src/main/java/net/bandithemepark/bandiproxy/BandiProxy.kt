@@ -15,6 +15,7 @@ import net.bandithemepark.bandiproxy.backend.BackendSetting
 import net.bandithemepark.bandiproxy.backend.MQTTConnector
 import net.bandithemepark.bandiproxy.motd.MotdUpdateListener
 import net.bandithemepark.bandiproxy.motd.ServerListEvents
+import net.bandithemepark.bandiproxy.network.BanEvents
 import net.bandithemepark.bandiproxy.network.BanManager
 import net.bandithemepark.bandiproxy.network.TransferEvents
 import net.bandithemepark.bandiproxy.settings.ProxySettings
@@ -64,6 +65,7 @@ class BandiProxy @Inject constructor(
         server.eventManager.register(this, BackendEvents())
         server.eventManager.register(this, ServerListEvents(logger))
         server.eventManager.register(this, TransferEvents())
+        server.eventManager.register(this, BanEvents())
 
         // Setup mqtt
         MotdUpdateListener().register()
