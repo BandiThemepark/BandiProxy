@@ -30,6 +30,9 @@ class BanEvents {
             "unban" -> {
                 BandiProxy.instance.banManager.unbanPlayer(UUID.fromString(json.asJsonObject.get("uuid").asString))
             }
+            "kick" -> {
+                BandiProxy.instance.banManager.kick(UUID.fromString(json.asJsonObject.get("uuid").asString), json.asJsonObject.get("reason").asString)
+            }
         }
     }
 }

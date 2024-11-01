@@ -54,6 +54,20 @@ class BanManager {
     }
 
     /**
+     * Kick a player with a custom reason
+     * @param uuid The UUID of the player to kick
+     * @param reason The reason for the kick
+     */
+    fun kick(uuid: UUID, reason: String) {
+        val player = BandiProxy.instance.server.getPlayer(uuid).orElse(null) ?: return
+        player.disconnect(MiniMessage.miniMessage().deserialize(
+            "<#aaa9a8>You have been kicked visiting BandiThemepark.<br>The following reason was given: <br><br><#b82727>" +
+            reason +
+            "<br><br><#aaa9a8>If you believe this kick was issued in error,<br>please contact our crew via our Discord at<br>discord.bandithemepark.net"
+        ))
+    }
+
+    /**
      * Unbans a player by their UUID
      * @param uuid The UUID of the player to unban
      */
