@@ -15,6 +15,7 @@ import net.bandithemepark.bandiproxy.backend.BackendSetting
 import net.bandithemepark.bandiproxy.backend.MQTTConnector
 import net.bandithemepark.bandiproxy.motd.MotdUpdateListener
 import net.bandithemepark.bandiproxy.motd.ServerListEvents
+import net.bandithemepark.bandiproxy.network.BanManager
 import net.bandithemepark.bandiproxy.network.TransferEvents
 import net.bandithemepark.bandiproxy.settings.ProxySettings
 import net.kyori.adventure.key.Key
@@ -42,6 +43,7 @@ class BandiProxy @Inject constructor(
 
     lateinit var settings: ProxySettings
     lateinit var mqttConnector: MQTTConnector
+    lateinit var banManager: BanManager
     var motd: String? = null
     @Subscribe(order = PostOrder.FIRST)
     fun onInit(event: ProxyInitializeEvent) {
@@ -49,6 +51,10 @@ class BandiProxy @Inject constructor(
 
         // Load settings
         settings = ProxySettings()
+
+        // Set up ban manager and load active bans
+        banManager = BanManager()
+        banManager.loadBannedPlayers()
 
         // Register messaging channels
         server.channelRegistrar.register(PING_CHANNEL_IDENTIFIER)
